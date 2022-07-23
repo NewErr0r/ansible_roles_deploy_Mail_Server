@@ -1,0 +1,21 @@
+---
+service_packages:
+  - chrony 
+  - wget
+
+epel_packages:
+  - epel-release
+  - http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+
+path_nginx_conf: /etc/nginx/nginx.conf
+
+mariadb_packages:
+  - mariadb-server
+  - python3-PyMySQL
+
+components_for_PHP:
+  - php-mysqli 
+  - php-mbstring 
+  - php-imap
+
+config_postfixadmin: /usr/share/nginx/html/postfixadmin/config.local.php

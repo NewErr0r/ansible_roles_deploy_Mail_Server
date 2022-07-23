@@ -1,0 +1,51 @@
+---
+- name: Install Web Server NGINX
+  dnf:
+    name: nginx
+    state: latest
+  notify: 
+    - Started and Enabled NGINX
+
+- name: Install EPEL and REMI
+  dnf: 
+    name: "{{ epel_packages }}"
+    state: latest
+
+- name: Installing PHP from the REMI repository
+  dnf: 
+    name: "@php:remi-7.2"
+    state: present
+
+- name: Install PHP-FPM
+  dnf: 
+    name: php-fpm 
+    state: latest
+  notify:
+    - Started and Enabled PHP-FPM
+
+- name: Configuration for processing PHP requests
+  copy:
+    src: nginx.conf
+    dest: "{{ path_nginx_conf }}"
+  notify: 
+    - Restart NGINX
+
+- name: Install MariaDB 
+  dnf: 
+    name: "{{ mariadb_packages }}"
+    state: latest
+
+- name: Started and Enabled MariaDB
+  service: 
+    name: mariadb 
+    enabled: true
+    state: started 
+
+- name: Configurations root password for MariaDB
+  mysql_user:
+    check_implicit_admin: true
+    login_user: "{{ mysql_root_user }}" 
+    login_password: "{{ mysql_root_pass }}"
+    user: root 
+    password: "{{ mysql_root_pass }}"
+    host: localhost 

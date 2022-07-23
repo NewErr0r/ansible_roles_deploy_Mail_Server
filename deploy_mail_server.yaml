@@ -1,0 +1,7 @@
+---
+- name: Installing a mail server
+  hosts: all
+  become: true
+
+  roles:
+    - role_mail_server

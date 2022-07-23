@@ -1,0 +1,16 @@
+---
+hostname: "test.domain.local" 
+timezone: "Europe/Moscow"
+
+###MariaDB###
+mysql_root_user: "root"
+mysql_root_pass: "P@ssw0rd"
+postfix_db: "postfix"
+postfix_user: "postfix"
+postfix_user_pass: "P@ssw0rd"
+
+###PostfixAdmin###
+postfixadmin_project: "https://sourceforge.net/projects/postfixadmin/files/latest/download -O postfixadmin.tar.gz"
+path_postfixadmin_project: /usr/share/nginx/html/postfixadmin
+
+download_postfixadmin_tar_gz: /usr/share/nginx/html

@@ -1,0 +1,63 @@
+---
+- name: Installing additional components for PHP
+  dnf:  
+    name: "{{ components_for_PHP }}"
+    state: latest
+  notify:
+    - Restart PHP
+
+- name: Create directory "postfixadmin"
+  file:
+    path: "{{ path_postfixadmin_project }}"
+    state: directory
+    recurse: yes 
+
+- name: Download PostfixAdmin
+  copy:
+    src: postfixadmin.tar.gz
+    dest: "{{ download_postfixadmin_tar_gz }}"
+
+- name: Unzip the project
+  shell: tar -C /usr/share/nginx/html/postfixadmin -xvf {{ download_postfixadmin_tar_gz }}/postfixadmin.tar.gz --strip-components 1
+
+- name: Create directory "templates_c"
+  file:
+    path: "{{ path_postfixadmin_project }}/templates_c"
+    state: directory
+    recurse: yes 
+
+- name: Granting rights to the project
+  file:
+    path: "{{ path_postfixadmin_project }}"
+    state: directory
+    recurse: yes
+    owner: apache
+    group: apache
+
+- name: Create DB for postfix
+  community.mysql.mysql_db:
+    name: "{{ postfix_db }}"
+    encoding: utf8
+    collation: utf8_bin
+    login_user: "{{ mysql_root_user }}" 
+    login_password: "{{ mysql_root_pass }}"
+  failed_when: false 
+
+- name: Create User for postfix
+  community.mysql.mysql_user:
+    name: "{{ postfix_user }}"
+    password: "{{ postfix_user_pass }}"
+    priv: '*.*:ALL,GRANT'
+    host: '%'
+    state: present
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_pass }}"
+
+- name: Creating a postfixadmin configuration file
+  template:
+    src: config.local.php.j2
+    dest: "{{ config_postfixadmin }}"
+
+
+
+    

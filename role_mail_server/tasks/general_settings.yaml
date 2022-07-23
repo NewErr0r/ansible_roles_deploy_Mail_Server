@@ -1,0 +1,39 @@
+---
+- name: Set a hostname machine
+  hostname: 
+    name: "{{ hostname }}"
+
+- name: Install service packages
+  dnf: 
+    name: "{{ service_packages }}"
+    state: latest
+  notify: 
+    - Enabled and Started Chrony
+
+- name: Configure timezone
+  shell: timedatectl set-timezone "{{ timezone }}"
+
+- name: Security Settings
+  firewalld:
+    port: " {{ item }}"
+    permanent: yes
+    state: enabled 
+  loop:
+    - "25/tcp"
+    - "80/tcp"
+    - "110/tcp"
+    - "143/tcp"
+    - "443/tcp"
+    - "465/tcp"
+    - "587/tcp"
+    - "993/tcp"
+    - "995/tcp"
+  notify: 
+    - Restart Firewalld
+
+- name: Disabled SELinux now
+  shell: setenforce 0  
+
+- name: Disabled SELinux 
+  ansible.posix.selinux:
+    state: disabled
