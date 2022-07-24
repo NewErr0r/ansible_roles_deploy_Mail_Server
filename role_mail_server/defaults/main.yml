@@ -9,9 +9,17 @@ mysql_root_pass: "P@ssw0rd"
 postfix_db: "postfix"
 postfix_user: "postfix"
 postfix_user_pass: "P@ssw0rd"
+roundcube_db: "roundcubemail"
+roundcube_user: "roundcube"
+roundcube_user_pass: "P@ssw0rd"
+destin_folder_import_db_roundcubemail: /usr/share/nginx/html/webmail/SQL/mysql.initial.sql
 
 ###PostfixAdmin###
 postfixadmin_project: "https://sourceforge.net/projects/postfixadmin/files/latest/download -O postfixadmin.tar.gz"
 path_postfixadmin_project: /usr/share/nginx/html/postfixadmin
 
 download_postfixadmin_tar_gz: /usr/share/nginx/html
+
+download_roundcube: "https://github.com/roundcube/roundcubemail/releases/download/1.2.11/roundcubemail-1.2.11-complete.tar.gz"
+path_download_roundcube: /root 
+path_roundcube: /usr/share/nginx/html/webmail

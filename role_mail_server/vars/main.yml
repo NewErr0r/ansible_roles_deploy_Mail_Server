@@ -42,3 +42,5 @@ path_15_lda_conf: /etc/dovecot/conf.d/15-lda.conf
 path_auth_sql_conf_ext: /etc/dovecot/conf.d/auth-sql.conf.ext
 path_dovecot_sql_conf_ext: /etc/dovecot/dovecot-sql.conf.ext
 path_dovecot_conf: /etc/dovecot/dovecot.conf
+
+path_config_inc_php: /usr/share/nginx/html/webmail/config/config.inc.php

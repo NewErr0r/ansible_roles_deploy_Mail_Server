@@ -22,3 +22,4 @@
 
 
 - name: Installing and configuring Roundcube Webmail
+  include_tasks: deploy_roundcube.yaml

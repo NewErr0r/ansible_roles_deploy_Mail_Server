@@ -1,0 +1,58 @@
+---
+- name: Download Roundcube
+  get_url:
+    url: "{{ download_roundcube }}"
+    dest: "{{ path_download_roundcube }}"
+
+- name: Creating a directory where the files will be placed Roundcube
+  file:
+    path: "{{ path_roundcube }}"
+    state: directory
+    recurse: yes
+
+- name: Unpacking the downloaded archive
+  shell: |
+    tar -C /usr/share/nginx/html/webmail -xvf {{ path_download_roundcube }}/roundcubemail-*.tar.gz --strip-components 1
+
+- name: Editing "config.inc.php"
+  template: 
+    src: config.inc.php.j2
+    dest: "{{ path_config_inc_php }}"
+
+- name: Setting the owner to the portal folder
+  file:
+    path: "{{ path_roundcube }}"
+    state: directory
+    recurse: yes
+    owner: apache
+    group: apache
+
+- name: Creating a database for roundcubemail in MariaDB
+  community.mysql.mysql_db:
+    name: "{{ roundcube_db }}"
+    encoding: utf8
+    collation: utf8_bin
+    login_user: "{{ mysql_root_user }}" 
+    login_password: "{{ mysql_root_pass }}"
+  failed_when: false 
+
+- name: Creating a user for roundcubemail in MariaDB
+  community.mysql.mysql_user:
+    name: "{{ roundcube_user }}"
+    password: "{{ roundcube_user_pass }}"
+    priv: '*.*:ALL,GRANT'
+    host: '%'
+    state: present
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_pass }}"
+
+- name: Upload to the created database
+  community.mysql.mysql_db:
+    name: "{{ roundcube_db }}"
+    encoding: utf8
+    collation: utf8_bin
+    target: "{{ destin_folder_import_db_roundcubemail }}"
+    state: import
+    login_user: "{{ mysql_root_user }}" 
+    login_password: "{{ mysql_root_pass }}"
+  failed_when: false 
