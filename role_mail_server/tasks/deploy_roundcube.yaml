@@ -56,3 +56,22 @@
     login_user: "{{ mysql_root_user }}" 
     login_password: "{{ mysql_root_pass }}"
   failed_when: false 
+
+- name: Installing the components necessary for Roundcube operation
+  dnf: 
+    name: "{{ roundcube_packages }}"
+    state: latest
+
+- name: Setting PHP 
+  template: 
+    src: php.ini.j2
+    dest: "{{ path_php_ini }}"
+  notify: 
+    - Restart PHP
+
+- name: Setting NGINX
+  copy:
+    src: nginx.conf
+    dest: "{{ path_nginx_conf }}"
+  notify: 
+    - Restart NGINX

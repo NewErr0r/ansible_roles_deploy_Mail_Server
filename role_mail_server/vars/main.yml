@@ -44,3 +44,12 @@ path_dovecot_sql_conf_ext: /etc/dovecot/dovecot-sql.conf.ext
 path_dovecot_conf: /etc/dovecot/dovecot.conf
 
 path_config_inc_php: /usr/share/nginx/html/webmail/config/config.inc.php
+
+roundcube_packages: 
+  - php-pear 
+  - php-mcrypt 
+  - php-intl 
+  - php-ldap 
+  - php-pear-Net-SMTP
+
+path_php_ini: /etc/php.ini
