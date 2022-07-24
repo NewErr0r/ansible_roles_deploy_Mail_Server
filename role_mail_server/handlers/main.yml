@@ -32,4 +32,10 @@
     name: php-fpm
     state: restarted
 
+- name: Started and Enabled Dovecot
+  service:
+    name: dovecot
+    enabled: true
+    state: started   
+
     

@@ -1,0 +1,47 @@
+---
+- name: Installing Dovecot with a component for working with DB
+  dnf: 
+    name: "{{ dovecot_packages }}"
+    state: latest
+
+- name: Setting up a way to store messages
+  copy:
+    src: 10-mail.conf
+    dest: "{{ path_10_mail_conf }}"
+
+- name: Setting up a listener for authentication
+  copy:
+    src: 10-master.conf
+    dest: "{{ path_10_master_conf }}"
+
+- name: Setting up authentication in Dovecot
+  copy:
+    src: 10-auth.conf
+    dest: "{{ path_10_auth_conf }}"
+
+- name: Setting up the use of encryption
+  copy:
+    src: 10-ssl.conf
+    dest: "{{ path_10_ssl_conf }}"
+
+- name: Automatic creation of directories when the user connects to the mailbox for the first time
+  copy:
+    src: 15-lda.conf
+    dest: "{{ path_15_lda_conf }}"
+
+- name: Setting up a connection to our database
+  copy: 
+    src: auth-sql.conf.ext
+    dest: "{{ path_auth_sql_conf_ext }}"
+
+- name: Creating a file with settings for working with mysql
+  template:
+    src: dovecot-sql.conf.ext.j2
+    dest: "{{ path_dovecot_sql_conf_ext }}"
+
+- name: Setting up the interface on which dovecot will listen
+  copy:
+    src: dovecot.conf
+    dest: "{{ path_dovecot_conf }}"
+  notify: 
+    - Started and Enabled Dovecot

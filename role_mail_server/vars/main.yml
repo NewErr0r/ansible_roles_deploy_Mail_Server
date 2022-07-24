@@ -19,3 +19,26 @@ components_for_PHP:
   - php-imap
 
 config_postfixadmin: /usr/share/nginx/html/postfixadmin/config.local.php
+
+postfix_packages:
+  - postfix 
+  - postfix-mysql
+
+path_main_cf: /etc/postfix/main.cf
+mysql_virtual_alias_maps_cf: /etc/postfix/mysql_virtual_alias_maps.cf
+mysql_virtual_domains_maps_cf: /etc/postfix/mysql_virtual_domains_maps.cf
+mysql_virtual_mailbox_maps_cf: /etc/postfix/mysql_virtual_mailbox_maps.cf
+path_master_cf: /etc/postfix/master.cf
+
+dovecot_packages:
+  - dovecot 
+  - dovecot-mysql
+
+path_10_mail_conf: /etc/dovecot/conf.d/10-mail.conf
+path_10_master_conf: /etc/dovecot/conf.d/10-master.conf
+path_10_auth_conf: /etc/dovecot/conf.d/10-auth.conf
+path_10_ssl_conf: /etc/dovecot/conf.d/10-ssl.conf
+path_15_lda_conf: /etc/dovecot/conf.d/15-lda.conf
+path_auth_sql_conf_ext: /etc/dovecot/conf.d/auth-sql.conf.ext
+path_dovecot_sql_conf_ext: /etc/dovecot/dovecot-sql.conf.ext
+path_dovecot_conf: /etc/dovecot/dovecot.conf

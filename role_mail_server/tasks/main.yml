@@ -1,4 +1,5 @@
 ---
+#############################1-BLOCK#############################################
 #- name: System preparation
 #  include_tasks: general_settings.yaml
 
@@ -8,6 +9,16 @@
 #- name: Installing and configuring PostfixAdmin
 #  include_tasks: deploy_postfixadmin.yaml
 
-####################################################################################
+#############################2-BLOCK#############################################
 
-- name: Installing and configuring Postfix
+
+#- name: Installing and configuring Postfix
+#  include_tasks: deploy_postfix.yaml
+
+#- name: Setting up Dovecot
+#  include_tasks: deploy_dovecot.yaml
+
+#############################3-BLOCK#############################################
+
+
+- name: Installing and configuring Roundcube Webmail

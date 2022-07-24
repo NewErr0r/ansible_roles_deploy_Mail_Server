@@ -1,6 +1,7 @@
 ---
 hostname: "test.domain.local" 
 timezone: "Europe/Moscow"
+domain: "test.domain.local"
 
 ###MariaDB###
 mysql_root_user: "root"

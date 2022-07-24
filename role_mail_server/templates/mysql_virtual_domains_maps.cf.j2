@@ -1,0 +1,5 @@
+user = {{ postfix_user }}
+password = {{ postfix_user_pass }}
+hosts = localhost
+dbname = postfix
+query = SELECT domain FROM domain WHERE domain='%u'
